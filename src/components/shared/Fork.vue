@@ -14,4 +14,9 @@
         width:initial;
         z-index:99999;
     }
+    @media(max-width:748px){
+        .fork a img {
+            max-width:120px;
+        }
+    }
 </style>

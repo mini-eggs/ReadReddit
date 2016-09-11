@@ -36,7 +36,7 @@
         </div>
     </div>
 </template>
-<style lang="stylus">
+<style>
     .subreddit-wrap {
         margin:30px 0;
     }

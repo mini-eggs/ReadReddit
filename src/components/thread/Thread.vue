@@ -21,7 +21,7 @@
         </div>
     </div>
 </template>
-<style lang="stylus">
+<style>
 </style>
 <script>
     import ThreadSplitComp from "./ThreadSplit.vue";
