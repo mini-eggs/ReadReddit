@@ -114,9 +114,8 @@ const store = new Vuex.Store({
                             curr.password = decrypt(curr.password);
 
                             if(!(curr.token.length > 0)){
-                                var verifyUrl = "https://www.reddit.com/api/v1/authorize?client_id=Cd9I1cNvacR6Vw&response_type=code&state=" + curr.device + "&redirect_uri=http://reddit.evanjon.es/&duration=permanent&scope=vote";
-                                // location.href = verifyUrl;
-                                console.log(verifyUrl);
+                                // var verifyUrl = "https://www.reddit.com/api/v1/authorize?client_id=Cd9I1cNvacR6Vw&response_type=code&state=" + curr.device + "&redirect_uri=http://reddit.evanjon.es/&duration=permanent&scope=vote";
+                                location.href = verifyUrl;
                             }
 
                             commit('SET_LOGIN', {curr});
