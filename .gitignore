@@ -2,7 +2,7 @@
 node_modules/
 dist/
 npm-debug.log
-#src/creds/mysql.js
-#src/creds/encryption.js
+src/creds/mysql.js
+src/creds/encryption.js
 .idea
 changing-repos.txt
