@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <fork-me/>
     <header-comp/>
     <div class="container">
       <router-view></router-view>
@@ -136,13 +137,15 @@
 <script>
   import headerComp from './components/shared/Header.vue';
   import footerComp from './components/shared/Footer.vue';
+  import forkMe from './components/shared/Fork.vue';
   export default {
     data:function(){
       return {};
     },
     components:{
       'header-comp':headerComp,
-      'footer-comp':footerComp
+      'footer-comp':footerComp,
+      'fork-me':forkMe
     }
   }
 </script>

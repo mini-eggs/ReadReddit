@@ -9,8 +9,11 @@
                             <li class="nav-item">
                                 <router-link to="/">Read Reddit</router-link>
                             </li>
+                            <li class="nav-item hide-for-banner-small">
+                                <router-link to="/about">About</router-link>
+                            </li>
                         </ul>
-                        <ul class="nav navbar-nav pull-xs-right">
+                        <ul class="nav navbar-nav pull-xs-right hide-for-banner-large">
                             <li class="nav-item">
                                 <router-link to="/about">About</router-link>
                             </li>
@@ -28,6 +31,20 @@
     }
     nav a, nav a:active, nav a:visited, nav a:focus, nav a:hover {
         color:#fff!important;
+    }
+    .hide-for-banner-small {
+        display:none;
+    }
+    .hide-for-banner-large {
+        display:block;
+    }
+    @media(max-width:1350px){
+        .hide-for-banner-small {
+            display:block;
+        }
+        .hide-for-banner-large {
+            display:none;
+        }
     }
 </style>
 <script>
