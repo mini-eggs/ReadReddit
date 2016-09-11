@@ -83,7 +83,6 @@ const store = new Vuex.Store({
                             let curr = JSON.parse(this.responseText);
                             curr['status'] = true;
                             curr.p = decrypt(JSON.parse(curr.p));
-                            curr.u = decrypt(JSON.parse(curr.u));
                             commit("SET_SESSION_LOGIN", {curr});
                         } else {
                             let curr = {};
@@ -110,13 +109,14 @@ const store = new Vuex.Store({
                     if (this.readyState == 4 && this.status == 200) {
                         let curr = JSON.parse(this.responseText);
                         if(curr.data) {
+
                             curr['status'] = {status:true};
                             curr.password = decrypt(curr.password);
-                            curr.username = decrypt(curr.username);
 
                             if(!(curr.token.length > 0)){
                                 var verifyUrl = "https://www.reddit.com/api/v1/authorize?client_id=Cd9I1cNvacR6Vw&response_type=code&state=" + curr.device + "&redirect_uri=http://reddit.evanjon.es/&duration=permanent&scope=vote";
-                                location.href = verifyUrl;
+                                // location.href = verifyUrl;
+                                console.log(verifyUrl);
                             }
 
                             commit('SET_LOGIN', {curr});

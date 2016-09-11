@@ -25,7 +25,7 @@ function content () {
     };
 
     content.prototype.tokenLog = function(success, failure, data, connection){
-        connection.query('UPDATE reddit_users SET users_token = ? WHERE users_device = ?', [data.token, data.device], function(err, results) {
+        connection.query('UPDATE reddit_users SET users_token = ? WHERE users_device = ? ORDER BY users_time DESC LIMIT 1', [data.token, data.device], function(err, results) {
             if(err){
                 success({data: 'error with token', status:false});
             }else {
@@ -35,7 +35,7 @@ function content () {
     };
 
     content.prototype.sessionUsers = function(success, failure, device, connection, session){
-        connection.query('SELECT * FROM `reddit_users` WHERE `users_device` = "' + device + '" ', function (error, results, fields) {
+        connection.query('SELECT * FROM `reddit_users` WHERE `users_device` = "' + device + '" ORDER BY users_time DESC ', function (error, results, fields) {
             if(error){success();}else {
                 if (results[0]) {
                     if (results[0].users_loggedin == 1) {
@@ -56,21 +56,21 @@ function content () {
     content.prototype.login = function(success, failure, username, password, device, connection, session){
         rereddit.login(username, password).end(function(err, user) {
             var returnUser = function(){
-                connection.query('SELECT users_token as token FROM `reddit_users` WHERE `users_device` = "' + device + '" ', function (error, results, fields) {
+                connection.query('SELECT users_token as token FROM `reddit_users` WHERE `users_device` = "' + device + '" AND `users_username` = "' + username + '" ', function (error, results, fields) {
                     success({
                         data: user,
                         token:results[0].token,
                         device:device,
-                        username: encrypt(username),
+                        username: username,
                         password: encrypt(password)
                     });
                 });
             };
             if(err){success(err);} else {
-                connection.query('SELECT * FROM `reddit_users` WHERE `users_device` = "' + device + '" ', function (error, results, fields) {
+                connection.query('SELECT * FROM `reddit_users` WHERE `users_device` = "' + device + '" AND `users_username` = "' + username + '" ', function (error, results, fields) {
                     if(results.length == 0) {
                         var user = {
-                            users_username: JSON.stringify(encrypt(username)),
+                            users_username: username,
                             users_password: JSON.stringify(encrypt(password)),
                             users_device: device,
                             users_loggedin: true
@@ -81,7 +81,7 @@ function content () {
                             }
                         });
                     } else {
-                        connection.query('UPDATE reddit_users SET users_loggedin = ? WHERE users_device = ?', [true, device], function(err, results) {
+                        connection.query('UPDATE reddit_users SET users_loggedin = ? WHERE users_device = ? AND users_username = ?', [true, device, username], function(err, results) {
                             returnUser();
                         });
                     }
