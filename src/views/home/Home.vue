@@ -6,7 +6,7 @@
                 <login-panel/>
             </div>
             <div class="col-xs-12 col-sm-8 pull-xs-left">
-                <input class="full" v-model="searchTerm" placeholder="Enter subreddit" />
+                <input class="full" v-model="searchTerm" debounce="250" placeholder="Enter subreddit" />
                 <template v-if="loading">
                     <div>
                         <load position="relative"/>
@@ -15,16 +15,17 @@
                 <template v-else>
                     <div>
                         <template v-for="(subreddit, index) in subreddits">
-                            <!--<div>-->
                             <router-link v-bind:to="subreddit.data.url">
                                 <button class="full">
                                     {{subreddit.data.url}}
                                 </button>
                             </router-link>
-                            <!--</div>-->
                         </template>
-                        <template v-if="(!(subreddits.length > 0))">
-
+                        <template v-if="(!(subreddits.length > 0)) && (searchTerm)">
+                            <div class="spacer"/>
+                            <button class="full">
+                                No results
+                            </button>
                         </template>
                     </div>
                 </template>
