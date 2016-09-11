@@ -15,7 +15,7 @@ export default context => {
             return component.preFetch(store)
         }
     })).then(() => {
-        
+
         isDev && console.log(`data pre-fetch: ${Date.now() - s}ms`);
         context.initialState = store.state;
         return app
