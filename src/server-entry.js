@@ -10,10 +10,12 @@ export default context => {
     const s = isDev && Date.now();
 
     return Promise.all(router.getMatchedComponents().map(component => {
+
         if (component.preFetch) {
             return component.preFetch(store)
         }
     })).then(() => {
+        
         isDev && console.log(`data pre-fetch: ${Date.now() - s}ms`);
         context.initialState = store.state;
         return app
