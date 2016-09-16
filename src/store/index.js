@@ -47,7 +47,7 @@ const store = new Vuex.Store({
                     onComplete:function(curr){
                         if(typeof curr == 'object') {
                             curr['status'] = true;
-                            curr.p = decrypt(JSON.parse(curr.p));
+                            // curr.p = decrypt(JSON.parse(curr.p));
                             commit("SET_SESSION_LOGIN", {curr});
                         } else {
                             curr = {};
@@ -65,7 +65,7 @@ const store = new Vuex.Store({
                     onComplete:function(curr){
                         if(curr.data) {
                             curr['status'] = {status:true};
-                            curr.password = decrypt(curr.password);
+                            // curr.password = decrypt(curr.password);
                             if(!(curr.token.length > 0)){
                                 var verifyUrl = "https://www.reddit.com/api/v1/authorize?client_id=Cd9I1cNvacR6Vw&response_type=code&state=" + curr.device + "&redirect_uri=http://reddit.evanjon.es/&duration=permanent&scope=vote";
                                 location.href = verifyUrl;

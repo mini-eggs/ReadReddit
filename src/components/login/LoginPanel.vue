@@ -6,15 +6,12 @@
         <template v-else>
             <div class="default-background default-padding">
                 <template v-if="user">
-                    Logged in as
-                    <input class="margin-normal full darker" type="submit" v-bind:value="user.username" />
+                    Logged in
                     <input v-on:click="logoutUser" class="margin-normal full darker" type="submit" v-bind:value="logout" />
                 </template>
                 <template v-else>
-                    Login
+                    Allow us to use Reddit
                     <form v-on:submit.prevent="form">
-                        <input type="text" class="margin-normal full darker" v-model="username" placeholder="Username" required/>
-                        <input type="password" class="margin-normal full darker " v-model="password" placeholder="Password" required/>
                         <input class="darker margin-normal full" type="submit" v-bind:value="submit" />
                     </form>
                 </template>
@@ -31,9 +28,9 @@
 
             return{
                 user:this.$store.getters.getLogin,
-                username:null,
-                password:null,
-                submit:'Submit',
+//                username:null,
+//                password:null,
+                submit:'Authenticate',
                 logout:'Logout',
                 loading:false
             }
@@ -53,13 +50,16 @@
                 }, 2000);
             },
             'resetBtn':function(){
-                this.submit = 'Submit'
+                this.submit = 'Authenticate'
             },
             'form':function(){
                 this.submit = '...';
                 let self=this;
                 setTimeout(function(){
-                    self.$store.dispatch('FETCH_LOGIN_ASYNC', {username: self.username, password: self.password});
+                    self.$store.dispatch('FETCH_LOGIN_ASYNC', {
+//                        username: self.username,
+//                        password: self.password
+                    });
                 }, 100);
             },
             'logoutUser':function(){
@@ -72,8 +72,8 @@
         watch:{
             '$store.getters.getLogin':function(val, oldVal){
 
-                this.username = null;
-                this.password = null;
+//                this.username = null;
+//                this.password = null;
 
                 if(!(val)) {//console.log('user has signed out');
                     this.user = val;
@@ -94,7 +94,10 @@
 
                 if(sessionUser.status){
                     this.loading = true;
-                    this.$store.dispatch('FETCH_LOGIN_ASYNC', {username: sessionUser.u, password: sessionUser.p});
+                    this.$store.dispatch('FETCH_LOGIN_ASYNC', {
+//                        username: sessionUser.u,
+//                        password: sessionUser.p
+                    });
                 }
             }
         },

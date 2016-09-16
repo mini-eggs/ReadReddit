@@ -40,8 +40,9 @@ function content () {
                 if (results[0]) {
                     if (results[0].users_loggedin == 1) {
                         success({
-                            u: results[0].users_username,
-                            p: results[0].users_password
+                            user:results[0]
+                            // u: results[0].users_username,
+                            // p: results[0].users_password
                         });
                     } else {
                         success();
@@ -57,22 +58,20 @@ function content () {
         // rereddit.login(username, password).end(function(err, user) {
             var user={message:'Broken library'};
             var returnUser = function(){
-                connection.query('SELECT users_token as token FROM `reddit_users` WHERE `users_device` = "' + device + '" AND `users_username` = "' + username + '" ', function (error, results, fields) {
+                connection.query('SELECT users_token as token FROM `reddit_users` WHERE `users_device` = "' + device + '" ', function (error, results, fields) {
                     success({
                         data: user,
                         token:results[0].token,
-                        device:device,
-                        username: username,
-                        password: encrypt(password)
+                        device:device
                     });
                 });
             };
             // if(err){success(err);} else {
-                connection.query('SELECT * FROM `reddit_users` WHERE `users_device` = "' + device + '" AND `users_username` = "' + username + '" ', function (error, results, fields) {
+                connection.query('SELECT * FROM `reddit_users` WHERE `users_device` = "' + device + '" ', function (error, results, fields) {
                     if(results.length == 0) {
                         var user = {
-                            users_username: username,
-                            users_password: JSON.stringify(encrypt(password)),
+                            users_username: 'no data',
+                            users_password: 'no data',
                             users_device: device,
                             users_loggedin: true
                         };
@@ -82,7 +81,7 @@ function content () {
                             }
                         });
                     } else {
-                        connection.query('UPDATE reddit_users SET users_loggedin = ? WHERE users_device = ? AND users_username = ?', [true, device, username], function(err, results) {
+                        connection.query('UPDATE reddit_users SET users_loggedin = ? WHERE users_device = ? ', [true, device], function(err, results) {
                             returnUser();
                         });
                     }
